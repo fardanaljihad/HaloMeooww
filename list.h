@@ -9,7 +9,7 @@
 #define Next(P) P->next
 
 typedef struct tInfoPenyakit {
-	char kategori[10];
+	char kategori[18];
 	int indeksPenyakit;
 	int waktuPelayanan;
 } infoPenyakit;

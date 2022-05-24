@@ -1,8 +1,21 @@
 #include "list.h"
 
+/*** DAFTAR PENYAKIT YANG DAPAT DILAYANI ***/
+char *daftarPenyakit[9] = {
+	"Penyakit Kulit", 
+	"Luka Ringan", 
+	"Bersin",
+	"Cacingan", 
+	"Diare", 
+	"Luka Dalam",
+	"Gangguan Kerongkongan dan Mengeluarkan Lendir Berbau Busuk", 
+	"Kuning", 
+	"Terkena Virus"
+};
+
 /**************** PROTOTYPE ****************/
 /**** Validator ****/
-bool isAddressEmpty(addressNodeList P){
+bool isAddressEmpty(addressNodeList P) {
 	if(P == NULL){
 		return true;
 	}
@@ -10,7 +23,8 @@ bool isAddressEmpty(addressNodeList P){
 		return false;
 	}
 }
-bool isListEmpty(List L){
+
+bool isListEmpty(List L) {
 	if(L.First == NULL){
 		return true;
 	}
@@ -20,16 +34,20 @@ bool isListEmpty(List L){
 }
 
 /**** Manajemen Memory ****/
-addressNodeList Alokasi(infoPenyakit X){
+addressNodeList Alokasi(infoPenyakit X) {
+	
 	addressNodeList P = (addressNodeList)malloc(sizeof(NodeList));
-	if(P ==NULL){
+	
+	if(P == NULL){
 		return NULL;
 	}
 	P->	info = X;
 	P->next = NULL;
+	
 	return P;
 }
-void Dealokasi(addressNodeList *P){
+
+void Dealokasi(addressNodeList *P) {
 	if(P == NULL){
 		return;
 	}
@@ -37,18 +55,37 @@ void Dealokasi(addressNodeList *P){
 }
 
 /**** Constructor ****/
-void BuatList(List *L){
+void BuatList(List *L) {
+	
 	(*L).First = NULL; 
 }
 
-void insertToList(List *L, int indeks);	
+void insertToList(List *L, int indeks) {
+	// Kamus Data
+	addressNodeList P;
+	infoPenyakit X;
+	
+	// Algoritma
+	setInfoPenyakit(&X, indeks);
+	P = Alokasi(X);
+	if(isListEmpty(*L)) {
+		insertFirst(&(*L), P);
+	}
+	else {
+		insertLast(&(*L), P);
+	}
+}
 
-void insertFirst(List *L, addressNodeList P){
+void insertFirst(List *L, addressNodeList P) {
+	
 	(*L).First = P;
 }
-void insertLast(List *L, addressNodeList P){
+
+void insertLast(List *L, addressNodeList P) {
+	// Kamus Data
 	addressNodeList Last;
 	
+	// Algoritma
 	Last = (*L).First;
 		while(Next(Last) != NULL){
 			Last = Next(Last);
@@ -57,26 +94,38 @@ void insertLast(List *L, addressNodeList P){
 }
 
 /**** Destructor ****/
-void HapusList(List *L);
+void HapusList(List *L) {
+	
+	free((*L).First);
+	(*L).First = NULL;
+}
 
 /**** Accessor ****/
-char *getKategori(addressNodeList P){
+char *getKategori(addressNodeList P) {
+	
 	return P->info.kategori;
 }
-int getIndeksPenyakit(addressNodeList P){
+
+int getIndeksPenyakit(addressNodeList P) {
+	
 	return P->info.indeksPenyakit;
 }
-int getWaktuPelayanan(addressNodeList P){
+
+int getWaktuPelayanan(addressNodeList P) {
+	
 	return P->info.waktuPelayanan;
 }
 
 /**** Mutator ****/
-void setInfoPenyakit(infoPenyakit *X, int indeks){
+void setInfoPenyakit(infoPenyakit *X, int indeks) {
+	
 	setKategori(&(*X),indeks);
 	setIndeksPenyakit(&(*X),indeks);
 	setWaktuPelayanan(&(*X),indeks);
 }
-void setKategori(infoPenyakit *X, int indeks){
+
+void setKategori(infoPenyakit *X, int indeks) {
+	
 	if(indeks<4){
 		strcpy((*X).kategori,"Penyakit Ringan");
 	}else if(indeks<7){
@@ -85,10 +134,14 @@ void setKategori(infoPenyakit *X, int indeks){
 		strcpy((*X).kategori,"Penyakit Berat");
 	}
 }
-void setIndeksPenyakit(infoPenyakit *X, int indeks){
+
+void setIndeksPenyakit(infoPenyakit *X, int indeks) {
+	
 	(*X).indeksPenyakit = indeks;
 }
-void setWaktuPelayanan(infoPenyakit *X, int indeks){
+
+void setWaktuPelayanan(infoPenyakit *X, int indeks) {
+	
 	if(indeks<4){
 		(*X).waktuPelayanan = 15;
 	}else if(indeks<7){
@@ -100,7 +153,32 @@ void setWaktuPelayanan(infoPenyakit *X, int indeks){
 
 /**** Operasi Tambahan ****/
 void printList(List L){
+	// Kamus Data
+	addressNodeList P;
+	int nomor = 1;
+	
+	// Algoritma
+	if(isListEmpty(L)) {
+		printf("List is empty...");
+	}
+	else {
+		P = L.First;
+	    while(!isAddressEmpty(P)) {
+			printf("%d. %s\n   Kategori : %s\n", nomor, daftarPenyakit[P->info.indeksPenyakit-1], P->info.kategori);
+			nomor += 1;
+			P = Next(P);
+		}
+	}
 	
 }
-int hitungJumlahPenyakit(addressNodeList First);
+
+int hitungJumlahPenyakit(addressNodeList First) {
+	
+	if(isAddressEmpty(First)) {
+		return 0;
+	}
+	else {
+		return hitungJumlahPenyakit(First->next) + 1;
+	}
+}
 

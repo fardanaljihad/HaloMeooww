@@ -2,7 +2,14 @@
 
 /**************** PROTOTYPE ****************/
 /**** Validator ****/
-bool addressEmpty(addressNodeQueue P);
+bool addressEmpty(addressNodeQueue P){
+	if(P == NULL){
+		return true;
+	}
+	else{
+		return false;
+	}
+}
 
 bool queueEmpty(Queue Q) {
 	
@@ -10,11 +17,31 @@ bool queueEmpty(Queue Q) {
 }
 
 /**** Manajemen Memory ****/
-addressNodeQueue alokasiNodeQueue(infoCustomer X);
-void dealokasiNodeQueue(addressNodeQueue *P);
+addressNodeQueue alokasiNodeQueue(infoCustomer X){
+	addressNodeQueue P = (addressNodeQueue)malloc(sizeof(NodeQueue));
+	
+	if(P == NULL){
+		return NULL;
+	}
+	P->	info = X;
+	P->next = NULL;
+	
+	return P;
+}
+
+void dealokasiNodeQueue(addressNodeQueue *P){
+	if(P == NULL){
+		return;
+	}
+	free(P);
+}
 
 /**** Constructor ****/
-void buatAntrian(Queue *Q);
+void buatAntrian(Queue *Q){
+	(*Q).Head = NULL;
+	(*Q).Tail = NULL;
+}
+
 void enqueue(Queue *Q, infoCustomer X);
 void insertAfter(Queue *Q, addressNodeQueue P);
 
@@ -27,9 +54,18 @@ void dequeue(Queue *Q);
 
 /**** Mutator ****/
 void setInfoCustomer(infoCustomer *X, char namaPemilik[20], char namaHewan[20], int waktuKedatangan, List data);
-void setNamaPemilik(infoCustomer *X, char namaPemilik[20]);
-void setNamaHewan(infoCustomer *X, char namaHewan[20]);
-void setWaktuKedatangan(infoCustomer *X, int waktuKedatangan);
+void setNamaPemilik(infoCustomer *X, char namaPemilik[20]){
+	strcpy((*X).namaPemilik, namaPemilik);
+}
+
+void setNamaHewan(infoCustomer *X, char namaHewan[20]){
+	strcpy((*X).namaHewan, namaHewan);
+}
+
+void setWaktuKedatangan(infoCustomer *X, int waktuKedatangan){
+	(*X).waktuKedatangan = waktuKedatangan;
+}
+
 void setDaftarPenyakit(infoCustomer *X, List data);
 void setNilaiPrioritas(infoCustomer *X, List L);
 void setEstimasiWaktuMulai(infoCustomer *X, int estimasiWaktuMulai);

@@ -53,7 +53,12 @@ void dequeue(Queue *Q);
 
 
 /**** Mutator ****/
-void setInfoCustomer(infoCustomer *X, char namaPemilik[20], char namaHewan[20], int waktuKedatangan, List data);
+void setInfoCustomer(infoCustomer *X, char namaPemilik[20], char namaHewan[20], int waktuKedatangan, List data){
+	setNamaPemilik(&(*X),namaPemilik);
+	setNamaHewan(&(*X),namaHewan);
+	setWaktuKedatangan(&(*X),waktuKedatangan);
+	setDaftarPenyakit(&(*X),data);
+}
 void setNamaPemilik(infoCustomer *X, char namaPemilik[20]){
 	strcpy((*X).namaPemilik, namaPemilik);
 }
@@ -66,7 +71,9 @@ void setWaktuKedatangan(infoCustomer *X, int waktuKedatangan){
 	(*X).waktuKedatangan = waktuKedatangan;
 }
 
-void setDaftarPenyakit(infoCustomer *X, List data);
+void setDaftarPenyakit(infoCustomer *X, List data){
+	(*X).daftarPenyakit = data;
+}
 void setNilaiPrioritas(infoCustomer *X, List L);
 void setEstimasiWaktuMulai(infoCustomer *X, int estimasiWaktuMulai);
 
@@ -138,6 +145,28 @@ int hitungNilaiPrioritas(List L) {
 }
 
 int hitungWaktuMulai(Queue Q);
-int hitungWaktuPelayanan(List L);
+int hitungWaktuPelayanan(List L){
+	// Kamus Data
+	addressNodeList P;
+	int Ringan = 0;
+	int Sedang = 0;
+	int Berat  = 0;
+	
+	// Algoritma
+	P = L.First;
+	while(!isAddressEmpty(P)) {
+		if(strcmp(P->info.kategori, "Ringan") == 0) {
+			Ringan++;
+		}
+		else if(strcmp(P->info.kategori, "Sedang") == 0) {
+			Sedang++;
+		}
+		else if(strcmp(P->info.kategori, "Berat") == 0) {
+			Berat++;
+		}
+		P = P->next;
+	}
+	return (Ringan*15) + (Sedang*30) + (Berat*45);
+}
 int hitungWaktuSelesai(Queue Q);
 void hitungWaktu(Queue *Q);

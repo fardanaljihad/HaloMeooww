@@ -6,5 +6,8 @@
 
 int main(int argc, char *argv[]) {
 	
+	Queue Q;
+	List L;
+	
 	return 0;
 }

@@ -6,6 +6,8 @@
 #include <string.h>
 #include <stdbool.h>
 
+#define Next(P) P->next
+
 typedef struct tInfoPenyakit {
 	char kategori[10];
 	int indeksPenyakit;

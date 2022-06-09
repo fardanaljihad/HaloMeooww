@@ -1,0 +1,18 @@
+Nama Hewan               : Bobi
+Nama Pemilik             : Bo
+Waktu kedatangan         : 0:0 WIB
+Penyakit Kucing : 
+------------------------------------
+
+Nama Hewan               : Bobi
+Nama Pemilik             : Bob
+Waktu kedatangan         : 0:0 WIB
+Penyakit Kucing : 
+------------------------------------
+
+Nama Hewan               : Bobi
+Nama Pemilik             : Bob
+Waktu kedatangan         : 0:0 WIB
+Penyakit Kucing : 
+------------------------------------
+
